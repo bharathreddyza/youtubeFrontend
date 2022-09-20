@@ -9,7 +9,7 @@ import Video from "./pages/Video";
 import SignIn from "./pages/SignIn";
 import Search from "./pages/Search";
 import { useSelector } from "react-redux";
-
+// import PersistentDrawerLeft from './components/SideBar'
 const Container = styled.div`
   display: flex;
 `;
@@ -40,6 +40,7 @@ function App() {
                   <Route path="trends" element={<Home type="trend" />} />
                   <Route path="subscriptions" element={<Home type="sub" />} />
                   <Route path="search" element={<Search />} />
+                  {/* <Route path="side" element={<PersistentDrawerLeft/>}/> */}
                   <Route
                     path="signin"
                     element={currentUser ? <Home /> : <SignIn />}
