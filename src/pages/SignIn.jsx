@@ -88,6 +88,18 @@ const SignIn = () => {
     }
   };
 
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    dispatch(loginStart());
+    try {
+      const res = await axios.post("https://youtubeback-end.herokuapp.com/api/auth/signup", { name, password ,email});
+      dispatch(loginSuccess(res.data));
+      navigate("/")
+    } catch (err) {
+      dispatch(loginFailure());
+    }
+  };
+
   const signInWithGoogle = async () => {
     dispatch(loginStart());
     signInWithPopup(auth, provider)
@@ -129,7 +141,18 @@ const SignIn = () => {
         <Button onClick={handleLogin}>Sign in</Button>
         <Title>or</Title>
         <Button onClick={signInWithGoogle}>Signin with Google</Button>
-        
+        <Title>or</Title>
+        <Input
+          placeholder="username"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+        <Input
+          type="password"
+          placeholder="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button onClick={handleSignup}>Sign up</Button>
       </Wrapper>
        
     </Container>
