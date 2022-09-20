@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
 import YouTube from "../img/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
@@ -17,8 +17,12 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
+import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
+
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Upload from "./Upload";
+
 const Container = styled.div`
   flex: 1;
   background-color: ${({ theme }) => theme.bgLighter};
@@ -84,8 +88,10 @@ const Title = styled.h2`
 
 const Menu = ({ darkMode, setDarkMode }) => {
   const { currentUser } = useSelector((state) => state.user);
+  const [open, setOpen] = useState(false);
 
   return (
+    <>
     <Container>
       <Wrapper>
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
@@ -108,19 +114,16 @@ const Menu = ({ darkMode, setDarkMode }) => {
           to="subscriptions"
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          <Item>
-            <SubscriptionsOutlinedIcon />
-            Subscriptions
+          <Item onClick={() => setOpen(true)}>
+           
+            <VideoCallOutlinedIcon  />
+            Upload
           </Item>
         </Link>
         <Hr />
-        <Item>
-          <VideoLibraryOutlinedIcon />
-          Library
-        </Item>
-        <Item>
-          <HistoryOutlinedIcon />
-          History
+        <Item onClick={() => setDarkMode(!darkMode)}>
+          <SettingsBrightnessOutlinedIcon />
+          {darkMode ? "Light" : "Dark"} Mode
         </Item>
         <Hr />
         {!currentUser &&
@@ -175,12 +178,12 @@ const Menu = ({ darkMode, setDarkMode }) => {
           <HelpOutlineOutlinedIcon />
           Help
         </Item>
-        <Item onClick={() => setDarkMode(!darkMode)}>
-          <SettingsBrightnessOutlinedIcon />
-          {darkMode ? "Light" : "Dark"} Mode
-        </Item>
+       
       </Wrapper>
     </Container>
+    {open && <Upload setOpen={setOpen} />}
+
+    </>
   );
 };
 
